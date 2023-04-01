@@ -1,0 +1,153 @@
+.poke-item {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  position: relative;
+  border-radius: var(--border-rounded);
+  overflow: hidden;
+  border: solid var(--pokeball-outline) 0.3rem;
+  &__left {
+    background-color: var(--pokeball-white);
+    display: grid;
+    place-content: center;
+    &__number {
+      position: absolute;
+      padding: 0 var(--pokeball-spacing) var(--pokeball-spacing) 0;
+      background-color: var(--pokeball-outline);
+      color: white;
+      border-radius: 0 0 var(--border-rounded) 0;
+      font-weight: bold;
+      font-size: var(--small-font);
+    }
+    &__sprite {
+      position: relative;
+      display: grid;
+      &--outline {
+        position: absolute;
+        z-index: 1;
+        filter: brightness(0);
+        width: 110%;
+        height: 110%;
+        align-self: center;
+        justify-self: center;
+      }
+      &--default {
+        position: relative;
+        z-index: 2;
+      }
+    }
+  }
+  &__button {
+    width: var(--pokeball-spacing);
+    background-color: var(--pokeball-outline);
+    position: relative;
+    display: grid;
+    place-content: center;
+    &::before {
+      content: '';
+      width: var(--pokeball-button-size);
+      height: var(--pokeball-button-size);
+      background-color: var(--pokeball-white);
+      border: solid var(--pokeball-outline) var(--pokeball-spacing);
+      border-radius: 100%;
+    }
+  }
+  &__right {
+    background-color: var(--pokeball-red);
+    padding-left: 1rem;
+    display: grid;
+    gap: 0.2rem;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: 1fr auto;
+    grid-template-areas: 'name icon' 'types .' 'stats .';
+    align-items: center;
+    &__name {
+      grid-area: name;
+      text-transform: uppercase;
+      font-size: var(--small-font);
+      color: white;
+      font-weight: bold;
+    }
+    &__icon {
+      grid-area: icon;
+    }
+    &__types {
+      $types: (
+        'bug': #8a970e,
+        'dark': #3f2c23,
+        'dragon': #6d57c9,
+        'electric': #e69503,
+        'fairy': #e291e3,
+        'fighting': #622b1b,
+        'fire': #c82101,
+        'flying': #5c75d5,
+        'ghost': #444491,
+        'grass': #498c32,
+        'ground': #917b38,
+        'ice': #6cd2f5,
+        'normal': #9e9a90,
+        'poison': #562b58,
+        'psychic': #da386d,
+        'rock': #a1883e,
+        'steel': #9091a1,
+        'water': #1270cd
+      );
+      grid-area: types;
+      display: flex;
+      gap: 0.8rem;
+      &__chip {
+        font-size: var(--x-small-font);
+        text-transform: uppercase;
+        font-weight: bold;
+        padding: 0.1rem 0.3rem;
+        border-radius: 1rem;
+        @each $type, $color in $types {
+          &--#{$type} {
+            position: relative;
+            display: grid;
+            color: white;
+            z-index: 0;
+            &::before {
+              content: '';
+              position: absolute;
+              justify-self: center;
+              align-self: center;
+              width: 100%;
+              height: 100%;
+              z-index: -1;
+              background-color: $color;
+              border-radius: inherit;
+              filter: brightness(0.8);
+            }
+            &::after {
+              content: '';
+              position: absolute;
+              justify-self: center;
+              align-self: center;
+              width: calc(100% + 0.4rem);
+              height: calc(100% + 0.3rem);
+              z-index: -2;
+              background-color: $color;
+              border-radius: inherit;
+            }
+          }
+        }
+      }
+    }
+    &__stats {
+      grid-area: stats;
+      display: flex;
+      justify-content: space-around;
+      color: white;
+      &__item {
+        display: flex;
+        gap: var(--small-font);
+        &__icon {
+        }
+        &__data {
+          font-weight: bold;
+          font-size: var(--small-font);
+        }
+      }
+    }
+  }
+}
